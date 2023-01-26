@@ -11,5 +11,5 @@ pub type Result<T> = StdResult<T, Box<dyn Error>>;
 
 pub trait ConnectionTrait: Sized {
 	fn new() -> Result<Self>;
-	fn window_titles(&self) -> Result<Vec<String>>;
+	fn window_titles(&self) -> Result<Vec<(u32,String)>>;
 }
