@@ -9,7 +9,7 @@ const PERMISSION_ERROR: &str = "osascript is not allowed assistive access";
 pub struct Connection;
 impl ConnectionTrait for Connection {
 	fn new() -> Result<Self> { Ok(Self) }
-	fn window_titles(&self) -> Result<Vec<String>> {
+	fn window_titles(&self) -> Result<Vec<(u32,String)>> {
 		let arguments = &["-ss", "-e", &format!("{} {}", PREFIX, SUFFIX)];
 		let command = Command::new("osascript").args(arguments).output()
 			.expect("failed to execute AppleScript command");
@@ -35,11 +35,11 @@ impl fmt::Display for WindowTitleError {
 }
 impl Error for WindowTitleError {}
 
-fn split(mut string: &str) -> Vec<String> {
+fn split(mut string: &str) -> Vec<(u32,String)> {
 	let mut titles = Vec::new();
 	while let Some(start) = string.find('"') {
 		let end = string[start + 1..].find('"').unwrap();
-		titles.push(string[start + 1..][..end].to_string());
+		titles.push((0,string[start + 1..][..end].to_string()));
 		string = &string[start + 1..][end + 1..];
 	}
 	titles
@@ -52,6 +52,6 @@ mod tests {
 	#[test]
 	fn test_split() {
 		let string = r#"{{}, {"0"}, {"1", "2"}}"#;
-		assert_eq!(split(string), &["0", "1", "2"]);
+		assert_eq!(split(string), &[(0,"0".to_string()), (1,"1".to_string()), (2,"2".to_string())]);
 	}
 }
