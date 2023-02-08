@@ -3,7 +3,7 @@ use std::{error::Error, fmt, process::Command};
 use crate::{ConnectionTrait, Result};
 
 const PREFIX: &str = r#"tell application "System Events""#;
-const SUFFIX: &str = r#"to get the title of every window of every process"#;
+const SUFFIX: &str = r#"to get the {id, title} of every window of every process"#;
 const PERMISSION_ERROR: &str = "osascript is not allowed assistive access";
 
 pub struct Connection;
