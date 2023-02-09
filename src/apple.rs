@@ -3,7 +3,7 @@ use std::{error::Error, fmt, process::{Command, Output}};
 use crate::{ConnectionTrait, Result};
 
 const PREFIX_ID: &str = r#"tell application "System Events""#;
-const SUFFIX_ID: &str = r#"to get the unix id of every process"#;
+const SUFFIX_ID: &str = r#"to get the id of every process"#;
 
 const PREFIX_WINDOW: &str = r#"tell application "System Events""#;
 const SUFFIX_WINDOW: &str = r#"to get the title of every window of every process"#;
@@ -53,7 +53,7 @@ fn split(mut string: &str, mut pid: &str) -> Vec<(u32,String)> {
 	while let (Some(start), Some(start_pid)) = (string.find('"'), pid.find(", ")) {
 		let end = string[start + 1..].find('"').unwrap();
 		let end_pid = pid[start_pid + 1..].find(", ").unwrap();
-		titles.push((pid[start_pid + 1..][..end_pid].to_string().trim().parse::<u32>().unwrap(),string[start + 1..][..end].to_string()));
+		titles.push((pid[start_pid + 1..][..end_pid].to_string().trim().parse::<u32>().unwrap(),string[start + 1..][..end].trim().replace("\"", "").to_string()));
 		
 		string = &string[start + 1..][end + 1..];
 		pid = &pid[start_pid + 1..][end_pid + 1..];
