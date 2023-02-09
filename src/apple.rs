@@ -50,13 +50,15 @@ impl Error for WindowTitleError {}
 
 fn split(mut string: &str, mut pid: &str) -> Vec<(u32,String)> {
 	let mut titles = Vec::new();
+	let mut i = 0;
 	while let (Some(start), Some(start_pid)) = (string.find('"'), pid.find(", ")) {
 		let end = string[start + 1..].find('"').unwrap();
 		let end_pid = pid[start_pid + 1..].find(", ").unwrap();
-		titles.push((pid[start_pid + 1..][..end_pid].to_string().trim().parse::<u32>().unwrap(),string[start + 1..][..end].trim().replace("\"", "").to_string()));
+		titles.push((pid.split(", ").collect::<Vec<&str>>()[i].trim().parse::<u32>().unwrap(),string[start + 1..][..end].trim().replace("\"", "").to_string()));
 		println!("pushed pid: {} and name: {}", pid[start_pid + 1..][..end_pid].to_string().trim().parse::<u32>().unwrap(),string[start + 1..][..end].trim().replace("\"", "").to_string());
 		string = &string[start + 1..][end + 1..];
 		pid = &pid[start_pid + 1..][end_pid + 1..];
+		i+=1;
 	}
 	println!("titles: {:?}", titles);
 	
