@@ -7,10 +7,10 @@ use std::{
 use crate::{ConnectionTrait, Result};
 
 const PREFIX_ID: &str = r#"tell application "System Events""#;
-const SUFFIX_ID: &str = r#"to get the unix id of every process"#;
+const SUFFIX_ID: &str = r#"to get the unix id of every process whose visible is true"#;
 
 const PREFIX_WINDOW: &str = r#"tell application "System Events""#;
-const SUFFIX_WINDOW: &str = r#"to get the title of every window of every process"#;
+const SUFFIX_WINDOW: &str = r#"to get name of every application process whose visible is true"#;
 
 const PERMISSION_ERROR: &str = "osascript is not allowed assistive access";
 
@@ -70,7 +70,7 @@ fn split(mut string: &str, mut pid: &str) -> Vec<(u32, String)> {
     let mut i = 0;
     while let (Some(start), Some(start_pid)) = (string.find('"'), pid.find(", ")) {
         let end = string[start + 1..].find('"').unwrap();
-        let end_pid = pid[start_pid + 1..].find(", ").unwrap();
+        let end_pid = pid[start_pid + 1..].find(", ").unwrap_or_default();
         titles.push((
             pid.split(", ").collect::<Vec<&str>>()[i]
                 .trim()

@@ -9,7 +9,7 @@ fn main() {
         .unwrap()
         .iter()
         .into_iter()
-        .unique_by(|(id, title)| title)
+        .unique_by(|(_, title)| title)
         .for_each(|(id, title)| println!("FINAL RESULT:\n id: {:?}, title: {:?}", id, title));
 
     println!("test");
