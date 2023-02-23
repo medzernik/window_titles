@@ -7,5 +7,12 @@ edition = "2018"
 [target.'cfg(target_os = "linux")'.dependencies]
 xcb = "1.2"
 
+[[bin]]
+name = "basic"
+path = "examples/basic.rs"
+
+[dependencies]
+itertools = "0.10"
+
 [target.'cfg(target_os = "windows")'.dependencies]
 winapi = { version = "0.3", features = ["winnt", "winuser", "minwindef"] }
