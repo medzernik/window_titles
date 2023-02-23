@@ -6,11 +6,13 @@ use std::{
 
 use crate::{ConnectionTrait, Result};
 
+
 const PREFIX_ID: &str = r#"tell application "System Events""#;
 const SUFFIX_ID: &str = r#"to get the unix id of every process whose visible is true"#;
 
 const PREFIX_WINDOW: &str = r#"tell application "System Events""#;
 const SUFFIX_WINDOW: &str = r#"to get name of every application process whose visible is true"#;
+
 
 const PERMISSION_ERROR: &str = "osascript is not allowed assistive access";
 
@@ -65,6 +67,7 @@ impl fmt::Display for WindowTitleError {
 }
 impl Error for WindowTitleError {}
 
+
 fn split(mut string: &str, mut pid: &str) -> Vec<(u32, String)> {
     let mut titles = Vec::new();
     let mut i = 0;
@@ -100,6 +103,7 @@ fn split(mut string: &str, mut pid: &str) -> Vec<(u32, String)> {
     println!("titles: {:?}", titles);
 
     titles
+
 }
 
 #[cfg(test)]
