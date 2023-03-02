@@ -75,7 +75,7 @@ fn split(mut string: &str, mut pid: &str) -> Vec<(u32, String)> {
         let end = string[start + 1..].find('"').unwrap();
         let end_pid = pid[start_pid + 1..].find(", ").unwrap_or_default();
         titles.push((
-            pid.split(", ").collect::<Vec<&str>>()[i]
+            pid.split(", ").collect::<Vec<&str>>()[0]
                 .trim()
                 .parse::<u32>()
                 .unwrap_or_default(),
