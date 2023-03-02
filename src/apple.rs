@@ -90,7 +90,7 @@ fn split(mut string: &str, mut pid: &str) -> Vec<(u32, String)> {
                 .to_string()
                 .trim()
                 .parse::<u32>()
-                .unwrap(),
+                .unwrap_or_default(),
             string[start + 1..][..end]
                 .trim()
                 .replace("\"", "")
